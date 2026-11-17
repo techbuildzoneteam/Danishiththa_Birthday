@@ -213,14 +213,7 @@ const tl=gsap.timeline({delay:.6});
 tl.fromTo("#l3",{opacity:0,scale:.9},{opacity:1,scale:1,duration:2}).to("#enter",{opacity:1,duration:1.2},"-=.8");
 $("#enter").onclick=()=>{startMusic();gsap.to("#intro",{opacity:0,duration:1.4,onComplete(){$("#intro").remove();document.body.style.overflow="";init()}})};
 // music
-let ac,aud,playing=false;
-function startMusic(){
- if(CONTENT.audioSrc){aud=aud||Object.assign(new Audio(CONTENT.audioSrc),{loop:true,volume:.5});aud.play().catch(()=>{});}
- else{try{ac=ac||new (window.AudioContext||webkitAudioContext)();const g=ac.createGain();g.gain.value=.0001;g.gain.exponentialRampToValueAtTime(.06,ac.currentTime+4);g.connect(ac.destination);
-  [[261.6,0],[329.6,4],[392,-3],[523.2,2],[659.3,-5]].forEach(([f,d])=>{const o=ac.createOscillator();o.type="sine";o.frequency.value=f;o.detune.value=d;const l=ac.createGain();l.gain.value=.5;const lf=ac.createOscillator();lf.frequency.value=.1+Math.random()*.15;const lg=ac.createGain();lg.gain.value=.3;lf.connect(lg);lg.connect(l.gain);lf.start();o.connect(l);l.connect(g);o.start()});
-  ac.resume()}catch(e){}}
- playing=true;$("#music").classList.add("on")}
-$("#music").onclick=()=>{if(playing){aud?aud.pause():ac&&ac.suspend();playing=false;$("#music").classList.remove("on")}else{aud?aud.play():ac?ac.resume():startMusic();playing=true;$("#music").classList.add("on")}};
+
 // cursor
 addEventListener("pointermove",e=>{if(e.pointerType==="mouse"){const c=$("#cur");c.style.left=e.clientX+"px";c.style.top=e.clientY+"px"}});
 // content builders
